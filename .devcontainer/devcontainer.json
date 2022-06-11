@@ -16,14 +16,15 @@
 	},
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
-	  "ms-azuretools.vscode-docker",
-	  "xdebug.php-debug",
-	  "bmewburn.vscode-intelephense-client",
-	  "neilbrayfield.php-docblocker",
-	  "formulahendry.code-runner",
-	  "gruntfuggly.todo-tree",
-	  "tabnine.tabnine-vscode",
-	  "GitLab.gitlab-workflow"
+		"ms-azuretools.vscode-docker",
+		"xdebug.php-debug",
+		"bmewburn.vscode-intelephense-client",
+		"neilbrayfield.php-docblocker",
+		"formulahendry.code-runner",
+		"gruntfuggly.todo-tree",
+		"tabnine.tabnine-vscode",
+		"GitLab.gitlab-workflow",
+		"vscjava.vscode-java-pack"
 	]
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
