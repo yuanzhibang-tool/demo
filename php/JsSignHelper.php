@@ -53,4 +53,4 @@ class JsSignHelper
 }
 
 // 调试
-// JsSignHelper::getJsSignInfo('100029', 'https://yuanzhibang.com/a/b/');
+JsSignHelper::getJsSignInfo('100029', 'https://yuanzhibang.com/a/b/');

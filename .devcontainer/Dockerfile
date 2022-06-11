@@ -19,4 +19,6 @@ RUN git config --global http.proxyAuthMethod 'basic'
 RUN git config --global http.sslverify false
 RUN git config --global https.sslverify false
 
+RUN echo '[XDebug]' >> /etc/php/7.4/cli/php.ini && echo "xdebug.remote_enable = 1" >> /etc/php/7.4/cli/php.ini && echo "xdebug.remote_autostart = 1" >> /etc/php/7.4/cli/php.ini
+
 ENTRYPOINT tail -f /dev/null 
