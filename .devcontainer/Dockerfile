@@ -1,0 +1,22 @@
+FROM ubuntu:20.04
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN echo 'start build'
+RUN LC_ALL=C.UTF-8
+
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt update
+RUN apt upgrade -y
+RUN echo 'start build'
+RUN LC_ALL=C.UTF-8
+
+RUN apt install -y php7.4 php7.4-dev gcc g++ composer git curl penjdk-8-jre-headless python3
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt update
+RUN apt install -y nodejs
+
+RUN git config --global http.proxyAuthMethod 'basic'
+RUN git config --global http.sslverify false
+RUN git config --global https.sslverify false
+
+ENTRYPOINT tail -f /dev/null 
