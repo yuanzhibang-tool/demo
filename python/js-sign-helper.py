@@ -22,8 +22,12 @@ class JsSignHelper:
         return url
 
     @staticmethod
+    def getJsTicketFromRedis(appId):
+        pass
+
+    @staticmethod
     def getJsSignInfo(appId: str, url: str):
-        jsTicket = ""
+        jsTicket = ""  # !从redis中取出
         # 取出url中的path之前的部分,参数和锚点不参与计算
         url = JsSignHelper.getPureUrl(url)
         # 获取当前时间戳
