@@ -7,13 +7,7 @@ import java.net.*;
 // !用来根据url生成js签名信息的类
 public class JsSignHelper {
 
-    public static HashMap<String, String> getJsSignInfo(String appId, String urlString) {
-        // !此值通过从redis中读取获取js_ticket
-        // String jsTicket = "a4dcdk";
-        String noncestr = UUID.randomUUID().toString(); // 此为随机生成的字符串,最长为128个字符串;
-        // noncestr = "1234";
-        long timestamp = System.currentTimeMillis() / 1000L;
-        // timestamp = 1654850924;
+    public static String getPureUrl(String urlString) {
         try {
             // !此为当前页面的url,为去除掉锚点和参数的部分,如果获取的url最后为/结尾,去除
             URL url = new URL(urlString);
@@ -21,6 +15,26 @@ public class JsSignHelper {
             String authority = url.getAuthority();
             String path = url.getPath();
             String pureUrlString = String.format("%s://%s%s", protocol, authority, path);
+            if (pureUrlString.endsWith("/")) {
+                // !如果最后为/结尾则去掉
+                pureUrlString = pureUrlString.substring(0, pureUrlString.length() - 1);
+            }
+            return pureUrlString;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static HashMap<String, String> getJsSignInfo(String appId, String urlString) {
+        // !此值通过从redis中读取获取js_ticket
+        String jsTicket = "a4dcdk";
+        String noncestr = UUID.randomUUID().toString(); // 此为随机生成的字符串,最长为128个字符串;
+        long timestamp = System.currentTimeMillis() / 1000L;
+        // timestamp = 1654850924;
+        // noncestr = "1234";
+
+        try {
+            String pureUrlString = JsSignHelper.getPureUrl(urlString);
             if (pureUrlString.endsWith("/")) {
                 // !如果最后为/结尾则去掉
                 pureUrlString = pureUrlString.substring(0, pureUrlString.length() - 1);
@@ -42,9 +56,10 @@ public class JsSignHelper {
             return null;
         }
     }
+
     // !调试
     public static void main(String[] args) {
         String urlString = "https://yuanzhibang.com/a/b/?x=1&b=2#2"; //
-        HashMap<String, String> jsSignInfo = HelloWorld.getJsSignInfo("100029", urlString);
+        HashMap<String, String> jsSignInfo = JsSignHelper.getJsSignInfo("100029", urlString);
     }
 }
