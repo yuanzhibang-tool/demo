@@ -4,6 +4,7 @@
     "module": "es6",
     "outDir": "out",
     "sourceMap": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports":true
   }
 }
