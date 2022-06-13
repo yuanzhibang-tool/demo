@@ -6,6 +6,7 @@ services:
     ports:
       - 6379:6379
   demo-dev:
-    build: .
+    image: yuanzhibang/demo-env:default
+    # build: .
     volumes:
       - ..:/home/developer/Demo
