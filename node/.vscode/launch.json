@@ -5,24 +5,9 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "java",
-      "name": "Launch Java Current File",
-      "request": "launch",
-      "mainClass": "${file}"
-    },
-    {
-      "name": "Debug Php current script in console",
-      "type": "php",
-      "request": "launch",
-      "program": "${file}",
-      "cwd": "${fileDirname}",
-      "externalConsole": false,
-      "port": 9003
-    },
-    {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
+      "name": "Launch Node Program",
       "program": "${file}",
       "preLaunchTask": "tsc: build - tsconfig.json",
       "outFiles": ["${workspaceFolder}/out/**/*.js"]

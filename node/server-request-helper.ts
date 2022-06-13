@@ -5,7 +5,8 @@ class ServerRequestHelper {
         got.post('https://baidu.com', {
             form: data
         }).then((response) => {
-            console.log(response);
+            const stringBody = response.body;
+            console.log(stringBody);
         }).catch((error) => {
             console.log(error);
         });
