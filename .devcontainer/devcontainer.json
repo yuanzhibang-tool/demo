@@ -19,12 +19,12 @@
 		"ms-azuretools.vscode-docker",
 		"xdebug.php-debug",
 		"bmewburn.vscode-intelephense-client",
-		"neilbrayfield.php-docblocker",
 		"formulahendry.code-runner",
 		"gruntfuggly.todo-tree",
 		"tabnine.tabnine-vscode",
-		"GitLab.gitlab-workflow",
-		"vscjava.vscode-java-pack"
+		"vscjava.vscode-java-pack",
+		"vscjava.vscode-maven",
+		"ms-python.python"
 	]
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
