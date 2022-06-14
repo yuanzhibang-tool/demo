@@ -6,12 +6,12 @@ import hashlib
 
 class JsSignHelper:
     @staticmethod
-    def getGuid():
+    def get_guid():
         uuidString = str(uuid.uuid1())
         return uuidString
 
     @staticmethod
-    def getPureUrl(url: str):
+    def get_pure_url(url: str):
         urlInfo = urlparse(url)
         scheme = urlInfo.scheme
         host = urlInfo.netloc
@@ -22,18 +22,18 @@ class JsSignHelper:
         return url
 
     @staticmethod
-    def getJsTicketFromRedis(appId):
+    def get_js_ticket_from_redis(appId):
         pass
 
     @staticmethod
-    def getJsSignInfo(appId: str, url: str):
+    def get_js_sign_info(appId: str, url: str):
         jsTicket = ""  # !从redis中取出
         # 取出url中的path之前的部分,参数和锚点不参与计算
-        url = JsSignHelper.getPureUrl(url)
+        url = JsSignHelper.get_pure_url(url)
         # 获取当前时间戳
         timestamp = int(time.time())
         # 生成nonce
-        noncestr = JsSignHelper.getGuid()
+        noncestr = JsSignHelper.get_guid()
         # jsTicket = "a4dcdk"
         # timestamp = 1654850924
         # noncestr = '1234'
@@ -50,5 +50,5 @@ class JsSignHelper:
         return returnData
 
 
-# JsSignHelper.getPureUrl("https://yuanzhibang.com:80/a/b/")
-# JsSignHelper.getJsSignInfo("100027", "https://yuanzhibang.com/a/b")
+# JsSignHelper.get_pure_url("https://yuanzhibang.com:80/a/b/")
+# JsSignHelper.get_js_sign_info("100027", "https://yuanzhibang.com/a/b")
