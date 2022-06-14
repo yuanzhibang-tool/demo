@@ -1,0 +1,61 @@
+package com.mycompany.app.api;
+
+import java.io.IOException;
+import java.util.Map;
+
+import org.apache.commons.httpclient.Credentials;
+import org.apache.commons.httpclient.HostConfiguration;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.UsernamePasswordCredentials;
+import org.apache.commons.httpclient.auth.AuthScope;
+import org.apache.commons.httpclient.methods.PostMethod;
+
+public class ServerRequestHelperA {
+
+    public static Object post(String url, Map<String, String> params, Map<String, String> headers, RequestProxy proxy) {
+        try {
+            HttpClient httpClient = new HttpClient();
+            PostMethod request = new PostMethod(url);
+            request.setRequestHeader("Content-Type", "multipart/form-data");
+            if (params != null) {
+                for (Map.Entry<String, String> entry : params.entrySet()) {
+                    request.addParameter(entry.getKey(), entry.getValue());
+                }
+            }
+            if (headers != null) {
+                for (Map.Entry<String, String> entry : headers.entrySet()) {
+                    request.setRequestHeader(entry.getKey(), entry.getValue());
+                }
+            }
+            if (proxy != null) {
+                HostConfiguration config = httpClient.getHostConfiguration();
+                config.setProxy(proxy.host, proxy.port);
+                Credentials credentials = new UsernamePasswordCredentials(proxy.username, proxy.password);
+                AuthScope authScope = new AuthScope(proxy.host, proxy.port);
+                httpClient.getState().setProxyCredentials(authScope, credentials);
+            }
+            try {
+                httpClient.executeMethod(request);
+                if (request.getStatusCode() == HttpStatus.SC_OK) {
+                    String response = request.getResponseBodyAsString();
+                    System.out.println("Response = " + response);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                request.releaseConnection();
+            }
+            return null;
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
+
+    public static void test() {
+        // building http client:Y@x.orzzzzzz.com:7789
+        RequestProxy proxy = new RequestProxy("x.orzzzzzz.com", 7789, "proxy_user", "F2pkto4GtRPAqTpY");
+        ServerRequestHelperA.post("https://api-service.yuanzhibang.com/api/v1/Ip/getClientIp", null, null, proxy);
+    }
+}
