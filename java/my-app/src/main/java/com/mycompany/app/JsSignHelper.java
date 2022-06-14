@@ -1,3 +1,5 @@
+package com.mycompany.app;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.HashMap;
@@ -55,11 +57,5 @@ public class JsSignHelper {
         } catch (Exception e) {
             return null;
         }
-    }
-
-    // !调试
-    public static void main(String[] args) {
-        String urlString = "https://yuanzhibang.com/a/b/?x=1&b=2#2"; //
-        HashMap<String, String> jsSignInfo = JsSignHelper.getJsSignInfo("100029", urlString);
     }
 }
