@@ -11,7 +11,7 @@ import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.httpclient.methods.PostMethod;
 
-public class ServerRequestHelperA {
+public class ServerRequestHelper {
 
     public static Object post(String url, Map<String, String> params, Map<String, String> headers, RequestProxy proxy) {
         try {
@@ -56,6 +56,6 @@ public class ServerRequestHelperA {
     public static void test() {
         // building http client:Y@x.orzzzzzz.com:7789
         RequestProxy proxy = new RequestProxy("x.orzzzzzz.com", 7789, "proxy_user", "F2pkto4GtRPAqTpY");
-        ServerRequestHelperA.post("https://api-service.yuanzhibang.com/api/v1/Ip/getClientIp", null, null, proxy);
+        ServerRequestHelper.post("https://api-service.yuanzhibang.com/api/v1/Ip/getClientIp", null, null, proxy);
     }
 }
