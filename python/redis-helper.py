@@ -13,7 +13,7 @@ class RedisHelper:
         client = redis.Redis(
             host=self.config['host'], port=self.config['port'], username=self.config['username'], password=self.config['auth'], decode_responses=True)
         server_access_token_info_string = client.get(
-            RedisHelper.get_app_server_access_token_key(app_id))
+            RedisHelper.get_app_server_access_token_cache_key(app_id))
         client.close()
         if server_access_token_info_string:
             server_access_token_info = json.loads(
@@ -26,7 +26,7 @@ class RedisHelper:
         client = redis.Redis(
             host=self.config['host'], port=self.config['port'], username=self.config['username'], password=self.config['auth'], decode_responses=True)
         js_ticket_info_string = client.get(
-            RedisHelper.get_app_js_ticket_key(app_id))
+            RedisHelper.get_app_js_ticket_cache_key(app_id))
         client.close()
         if js_ticket_info_string:
             js_ticket_info = json.loads(js_ticket_info_string)
@@ -35,11 +35,11 @@ class RedisHelper:
         return None
 
     @staticmethod
-    def get_app_server_access_token_key(app_id):
+    def get_app_server_access_token_cache_key(app_id):
         return "type/server_access_token_info/app_id/%s" % app_id
 
     @staticmethod
-    def get_app_js_ticket_key(app_id):
+    def get_app_js_ticket_cache_key(app_id):
         return "type/js_ticket_info/app_id/%s" % app_id
 
 
