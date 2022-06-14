@@ -11,8 +11,6 @@ services:
   demo-dev-cache-redis:
     image: redis:latest
     command: redis-server --port 6379 --requirepass p8WOmXgzZg  --appendonly yes
-    ports:
-      - 6379:6379
   demo-proxy:
     image: yuanzhibang/proxy:default
     environment:
