@@ -48,4 +48,4 @@ class ApiRequestHelper:
         "https": '123:12345678@demo-proxy:7789'
         })
 
-ApiRequestHelper.test()
+# ApiRequestHelper.test()

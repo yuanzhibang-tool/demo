@@ -36,15 +36,16 @@ class RedisHelper:
     def get_js_ticket_cache_key(app_id):
         return "type/js_ticket_info/app_id/%s" % app_id
 
-
-config = {
-    "host": "demo-dev-cache-redis",
-    "port": 6379,
-    "auth": 'p8WOmXgzZg',
-    "username": "default"
-}
-helper = RedisHelper(config)
-token = helper.get_server_access_token("100027")
-print(token)
-ticket = helper.get_js_ticket("100027")
-print(ticket)
+    @staticmethod
+    def test():
+        config = {
+            "host": "demo-dev-cache-redis",
+            "port": 6379,
+            "auth": 'p8WOmXgzZg',
+            "username": "default"
+        }
+        helper = RedisHelper(config)
+        token = helper.get_server_access_token("100027")
+        print(token)
+        ticket = helper.get_js_ticket("100027")
+        print(ticket)
