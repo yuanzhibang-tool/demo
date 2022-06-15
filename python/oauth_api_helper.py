@@ -41,6 +41,15 @@ class OauthApiHelper:
         return response_data
 
     @staticmethod
+    def get_user_is_app_added(app_id,open_id):
+        api = OauthApiHelper.get_api_by_path("/UserResource/getAppIsAdded")
+        server_access_token = OauthApiHelper.get_server_access_token(app_id)
+        params = {"app_id":app_id,"open_id":open_id,"access_token":server_access_token}
+        response_data = ApiRequestHelper.post(api,params)
+        is_added = response_data['is_added']
+        return is_added
+
+    @staticmethod
     def get_user_base_info(app_id,open_id):
         api = OauthApiHelper.get_api_by_path("/UserResource/getUserBaseInfo")
         server_access_token = OauthApiHelper.get_server_access_token(app_id)
@@ -58,7 +67,7 @@ class OauthApiHelper:
 
     @staticmethod
     def get_server_access_token(app_id):
-        return "658bc3778dd7a8db5209fd16e91b3b8d8d115129d22dc4ab7f42cb4f6394a625"
+        return "d11141568b557a405715d35db3f1cc40e076a1957e637889c7c071beefdc0137"
     @staticmethod
     def get_api_by_path(path:str):
         api = "https://oauth.yuanzhibang.com" + path
@@ -70,4 +79,4 @@ class OauthApiHelper:
 open_id = 'b3dFUWFoMW0vUFgwSGxzWlNOV3JLc2pFRENnSlp6Z2NBMFpsZ3NvQXVMVTR2RnJsUkRtQU5MS1Z3V2hSYzdtQ3hnQkZzelhjT0lXbTBGWmVOdHBRYTAwNys0NisramlxU21PZ3lrb1o5Q3FORC96bStTNW5ZbEtiRjRLeUQ5SVFsN1gyUHVld1lJaDkvWGJqZ0trNGx3eWZaUWhORDc1UjBWSGFDWVpFNlhnPQ'
 # open_id = 'VS9XVWxEMkNocHRyaTQ4TDRwblpMNU1tSVdjbXUwQytkd2ZMUlBqRXdnTTVqYWluVXExdXhQbzJBUDZjdnNwTVpoRTY5SXhxd0VCZU9Jc3ZvekkrWE1McE9wNzdkVTUvWjg3c2hlQzNqQUVBM2FOOHF0Y29hanI2SElmczkxS3g0eTkvSk9OQysrcGFyV21VTzJhQm9ZSGliS2ppdnlwR0JMZUIrKzJraFIwPQ'
 # OauthApiHelper.get_app_user_list("101170")
-OauthApiHelper.get_user_base_info("101170",open_id)
+OauthApiHelper.get_user_is_app_added("101170",open_id)
