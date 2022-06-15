@@ -40,5 +40,12 @@ class ApiRequestHelper:
         if status.startswith('2') is False:
             raise OauthApiError(status, message, response)
 
+    @staticmethod
+    def test():
+        ApiRequestHelper.post('https://api-service.yuanzhibang.com/api/v1/Ip/getClientIp',{},
+        {
+        "http": '123:12345678@demo-proxy:7789',
+        "https": '123:12345678@demo-proxy:7789'
+        })
 
-ApiRequestHelper.post('https://baidu.com', {})
+ApiRequestHelper.test()
