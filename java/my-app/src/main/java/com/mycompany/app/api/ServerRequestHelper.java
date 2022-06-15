@@ -80,8 +80,7 @@ public class ServerRequestHelper {
     }
 
     public static void test() {
-        // building http client:Y@x.orzzzzzz.com:7789
-        RequestProxy proxy = new RequestProxy("x.orzzzzzz.com", 7789, "proxy_user", "F2pkto4GtRPAqTpY");
+        RequestProxy proxy = new RequestProxy("demo-proxy", 7789, "123", "12345678");
         ServerRequestHelper.post("https://api-service.yuanzhibang.com/api/v1/Ip/getClientIp", null, null, proxy);
     }
 }

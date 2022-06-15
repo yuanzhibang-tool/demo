@@ -17,12 +17,12 @@ class OauthApiError(OauthError):
     pass
 
 
-class ServerRequestHelper:
+class ApiRequestHelper:
     @staticmethod
     def post(url, data, proxies=None):
         response = requests.post(url=url, data=data, proxies=proxies)
-        ServerRequestHelper.raise_network_error(response)
-        ServerRequestHelper.raise_api_error(response)
+        ApiRequestHelper.raise_network_error(response)
+        ApiRequestHelper.raise_api_error(response)
         response_object = response.json()
         return response_object['data']
 
@@ -41,4 +41,4 @@ class ServerRequestHelper:
             raise OauthApiError(status, message, response)
 
 
-ServerRequestHelper.post('https://baidu.com', {})
+ApiRequestHelper.post('https://baidu.com', {})
