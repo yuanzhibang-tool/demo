@@ -1,12 +1,14 @@
 from http import server
 from api_request_helper import ApiRequestHelper, OauthApiError, OauthNetworkError
 
+
 class OauthApiHelper:
     @staticmethod
-    def check_code(app_id, code,type):
+    def check_code(app_id, code, type):
         api = OauthApiHelper.get_api_by_path("/OAuth2/checkCode")
         try:
-            response_data = ApiRequestHelper.post(api,{"app_id":app_id,"code":code,"type":type})
+            response_data = ApiRequestHelper.post(
+                api, {"app_id": app_id, "code": code, "type": type})
             return response_data
         except OauthApiError as e:
             status_code = e.code
@@ -15,48 +17,51 @@ class OauthApiHelper:
             else:
                 raise e
 
-
     @staticmethod
     def get_app_user_count(app_id):
         api = OauthApiHelper.get_api_by_path("/CommonResource/getUserCount")
         server_access_token = OauthApiHelper.get_server_access_token(app_id)
-        params = {"app_id":app_id,"access_token":server_access_token}
-        response_data = ApiRequestHelper.post(api,params)
-        count = response_data["count"]
+        params = {"app_id": app_id, "access_token": server_access_token}
+        response_data = ApiRequestHelper.post(api, params)
+        count = response_data["user_count"]
         return count
 
     @staticmethod
     def get_app_user_list(app_id):
         api = OauthApiHelper.get_api_by_path("/CommonResource/getUserList")
         server_access_token = OauthApiHelper.get_server_access_token(app_id)
-        params = {"app_id":app_id,"access_token":server_access_token,"load_more_id":0,"load_more_count":100}
-        response_data = ApiRequestHelper.post(api,params)
+        params = {"app_id": app_id, "access_token": server_access_token,
+                  "load_more_id": 0, "load_more_count": 100}
+        response_data = ApiRequestHelper.post(api, params)
         return response_data
 
     @staticmethod
-    def get_user_app_access(app_id,open_id):
+    def get_user_app_access(app_id, open_id):
         api = OauthApiHelper.get_api_by_path("/UserResource/getAppAccess")
         server_access_token = OauthApiHelper.get_server_access_token(app_id)
-        params = {"app_id":app_id,"open_id":open_id,"access_token":server_access_token}
-        response_data = ApiRequestHelper.post(api,params)
+        params = {"app_id": app_id, "open_id": open_id,
+                  "access_token": server_access_token}
+        response_data = ApiRequestHelper.post(api, params)
         return response_data
 
     @staticmethod
-    def get_user_is_app_added(app_id,open_id):
+    def get_user_is_app_added(app_id, open_id):
         api = OauthApiHelper.get_api_by_path("/UserResource/getAppIsAdded")
         server_access_token = OauthApiHelper.get_server_access_token(app_id)
-        params = {"app_id":app_id,"open_id":open_id,"access_token":server_access_token}
-        response_data = ApiRequestHelper.post(api,params)
+        params = {"app_id": app_id, "open_id": open_id,
+                  "access_token": server_access_token}
+        response_data = ApiRequestHelper.post(api, params)
         is_added = response_data['is_added']
         return is_added
 
     @staticmethod
-    def get_user_base_info(app_id,open_id):
+    def get_user_base_info(app_id, open_id):
         api = OauthApiHelper.get_api_by_path("/UserResource/getUserBaseInfo")
         server_access_token = OauthApiHelper.get_server_access_token(app_id)
-        params = {"app_id":app_id,"open_id":open_id,"access_token":server_access_token}
+        params = {"app_id": app_id, "open_id": open_id,
+                  "access_token": server_access_token}
         try:
-            response_data = ApiRequestHelper.post(api,params)
+            response_data = ApiRequestHelper.post(api, params)
             return response_data
         except OauthApiError as e:
             status_code = e.code
@@ -68,9 +73,10 @@ class OauthApiHelper:
 
     @staticmethod
     def get_server_access_token(app_id):
-        return "d11141568b557a405715d35db3f1cc40e076a1957e637889c7c071beefdc0137"
+        return "84900d8da2cc2bcddf82e134a04c89ae30f022345dc0fe0c223a701bad09cd2f"
+
     @staticmethod
-    def get_api_by_path(path:str):
+    def get_api_by_path(path: str):
         api = "https://oauth.yuanzhibang.com" + path
         return api
 
@@ -80,4 +86,4 @@ class OauthApiHelper:
 open_id = 'b3dFUWFoMW0vUFgwSGxzWlNOV3JLc2pFRENnSlp6Z2NBMFpsZ3NvQXVMVTR2RnJsUkRtQU5MS1Z3V2hSYzdtQ3hnQkZzelhjT0lXbTBGWmVOdHBRYTAwNys0NisramlxU21PZ3lrb1o5Q3FORC96bStTNW5ZbEtiRjRLeUQ5SVFsN1gyUHVld1lJaDkvWGJqZ0trNGx3eWZaUWhORDc1UjBWSGFDWVpFNlhnPQ'
 # open_id = 'VS9XVWxEMkNocHRyaTQ4TDRwblpMNU1tSVdjbXUwQytkd2ZMUlBqRXdnTTVqYWluVXExdXhQbzJBUDZjdnNwTVpoRTY5SXhxd0VCZU9Jc3ZvekkrWE1McE9wNzdkVTUvWjg3c2hlQzNqQUVBM2FOOHF0Y29hanI2SElmczkxS3g0eTkvSk9OQysrcGFyV21VTzJhQm9ZSGliS2ppdnlwR0JMZUIrKzJraFIwPQ'
 # OauthApiHelper.get_app_user_list("101170")
-OauthApiHelper.get_user_is_app_added("101170",open_id)
+OauthApiHelper.get_app_user_count("101170")
