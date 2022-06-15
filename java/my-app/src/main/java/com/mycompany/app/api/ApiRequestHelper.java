@@ -21,8 +21,11 @@ import org.apache.http.impl.client.ProxyAuthenticationStrategy;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-public class ServerRequestHelper {
+import com.google.gson.Gson;
 
+public class ApiRequestHelper {
+
+    @SuppressWarnings("unchecked")
     public static Object post(String url, Map<String, String> params, Map<String, String> headers, RequestProxy proxy) {
         try {
             CloseableHttpClient httpClient;
@@ -62,17 +65,17 @@ public class ServerRequestHelper {
                     request.setHeader(entry.getKey(), entry.getValue());
                 }
             }
-
             try {
                 HttpResponse response = httpClient.execute(request);
                 String responseString = EntityUtils.toString(response.getEntity());
-                responseString.getClass();
+                Gson gson = new Gson();
+                Map<String, String> info = gson.fromJson(responseString, Map.class);
+                return info;
             } catch (IOException e) {
-                e.printStackTrace();
+                return null;
             } finally {
                 request.releaseConnection();
             }
-            return null;
         } catch (Exception e) {
             return null;
         }
@@ -81,6 +84,6 @@ public class ServerRequestHelper {
 
     public static void test() {
         RequestProxy proxy = new RequestProxy("demo-proxy", 7789, "123", "12345678");
-        ServerRequestHelper.post("https://api-service.yuanzhibang.com/api/v1/Ip/getClientIp", null, null, proxy);
+        ApiRequestHelper.post("https://api-service.yuanzhibang.com/api/v1/Ip/getClientIp", null, null, proxy);
     }
 }
