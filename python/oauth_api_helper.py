@@ -22,7 +22,8 @@ class OauthApiHelper:
         server_access_token = OauthApiHelper.get_server_access_token(app_id)
         params = {"app_id":app_id,"access_token":server_access_token}
         response_data = ApiRequestHelper.post(api,params)
-        return response_data
+        count = response_data["count"]
+        return count
 
     @staticmethod
     def get_app_user_list(app_id):
