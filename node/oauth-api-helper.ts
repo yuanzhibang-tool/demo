@@ -43,7 +43,7 @@ class OauthApiHelper {
         };
         return new Promise<number>((resolve, reject) => {
             this.apiRequest(api, postData).then((data) => {
-                const count = data['count'];
+                const count = data['user_count'];
                 resolve(count);
             }
             ).catch((error) => {

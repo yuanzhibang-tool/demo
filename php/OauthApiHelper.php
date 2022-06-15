@@ -36,7 +36,7 @@ class OauthApiHelper
             'access_token' => OauthApiHelper::getServerAccessToken($appId)
         ];
         $responseData = OauthApiHelper::apiRequest($api, $postData);
-        $count = $responseData['count'];
+        $count = $responseData['user_count'];
         return $count;
     }
 

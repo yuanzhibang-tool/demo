@@ -36,7 +36,7 @@ public class OauthApiHelper {
         postData.put("app_id", appId);
         postData.put("access_token", OauthApiHelper.getServerAccessToken(appId));
         Map<String, Integer> responseData = (Map<String, Integer>) OauthApiHelper.apiRequest(api, postData);
-        Integer count = responseData.get("count");
+        Integer count = responseData.get("user_count");
         return count;
     }
 
