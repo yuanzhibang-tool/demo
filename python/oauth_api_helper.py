@@ -51,7 +51,7 @@ class OauthApiHelper:
         except OauthApiError as e:
             status_code = e.code
             if status_code == "4103":
-                # 没有权限获取，提示用户授权
+                # !没有权限获取，提示用户授权
                 return False
             else:
                 raise e
