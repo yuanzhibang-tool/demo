@@ -1,6 +1,6 @@
 <?php
 
-class ServerRequestHelper
+class ApiRequestHelper
 {
     public function post($url, $params = array(), $headers = array(), $proxy = null)
     {
