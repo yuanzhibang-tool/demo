@@ -73,7 +73,7 @@ class OauthApiHelper:
 
     @staticmethod
     def get_server_access_token(app_id):
-        return "84900d8da2cc2bcddf82e134a04c89ae30f022345dc0fe0c223a701bad09cd2f"
+        return "7f88bf6c2c9d38c80719b4926f49a97a2cc63619ebddf7a4ec29c0e086efa1fe"
 
     @staticmethod
     def get_api_by_path(path: str):
@@ -85,5 +85,10 @@ class OauthApiHelper:
 # OauthApiHelper.get_app_user_list("101170")
 open_id = 'b3dFUWFoMW0vUFgwSGxzWlNOV3JLc2pFRENnSlp6Z2NBMFpsZ3NvQXVMVTR2RnJsUkRtQU5MS1Z3V2hSYzdtQ3hnQkZzelhjT0lXbTBGWmVOdHBRYTAwNys0NisramlxU21PZ3lrb1o5Q3FORC96bStTNW5ZbEtiRjRLeUQ5SVFsN1gyUHVld1lJaDkvWGJqZ0trNGx3eWZaUWhORDc1UjBWSGFDWVpFNlhnPQ'
 # open_id = 'VS9XVWxEMkNocHRyaTQ4TDRwblpMNU1tSVdjbXUwQytkd2ZMUlBqRXdnTTVqYWluVXExdXhQbzJBUDZjdnNwTVpoRTY5SXhxd0VCZU9Jc3ZvekkrWE1McE9wNzdkVTUvWjg3c2hlQzNqQUVBM2FOOHF0Y29hanI2SElmczkxS3g0eTkvSk9OQysrcGFyV21VTzJhQm9ZSGliS2ppdnlwR0JMZUIrKzJraFIwPQ'
-# OauthApiHelper.get_app_user_list("101170")
-OauthApiHelper.get_app_user_count("101170")
+# user_list = OauthApiHelper.get_app_user_list("101170")
+# print(user_list)
+# count = OauthApiHelper.get_app_user_count("101170")
+# print(count)
+
+user_base_info = OauthApiHelper.get_user_base_info("101170", open_id)
+print(user_base_info)

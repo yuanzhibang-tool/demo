@@ -1,5 +1,8 @@
 <?php
 
+require_once dirname(dirname(__FILE__)) . '/php/ApiRequestHelper.php';
+require_once dirname(dirname(__FILE__)) . '/php/OpenAuthErrorException.php';
+
 class OauthApiHelper
 {
 
@@ -112,7 +115,7 @@ class OauthApiHelper
 
     public static function getServerAccessToken($appId)
     {
-        return "d11141568b557a405715d35db3f1cc40e076a1957e637889c7c071beefdc0137";
+        return "88d44ec64698d60bf1841b4e8bde4754de87a239ada9284405f403809bd83987";
     }
 
     public static function apiRequest($url, $postData)
@@ -133,3 +136,16 @@ class OauthApiHelper
         }
     }
 }
+
+$appId = "101170";
+// $userCount = OauthApiHelper::getAppUserCount($appId);
+// print($userCount);
+$openId = "b3dFUWFoMW0vUFgwSGxzWlNOV3JLc2pFRENnSlp6Z2NBMFpsZ3NvQXVMVTR2RnJsUkRtQU5MS1Z3V2hSYzdtQ3hnQkZzelhjT0lXbTBGWmVOdHBRYTAwNys0NisramlxU21PZ3lrb1o5Q3FORC96bStTNW5ZbEtiRjRLeUQ5SVFsN1gyUHVld1lJaDkvWGJqZ0trNGx3eWZaUWhORDc1UjBWSGFDWVpFNlhnPQ";
+// $userBaseInfo = OauthApiHelper::getUserBaseInfo($appId, $openId);
+// $isAdded = OauthApiHelper::getUserIsAppAdded($appId, $openId);
+
+// $accesss = OauthApiHelper::getUserAppAccess($appId, $openId);
+// $result = OauthApiHelper::getAppUserList($appId);
+$result = OauthApiHelper::checkCode($appId, "88d44ec64698d60bf1841b4e8bde4754de87a239ada9284405f403809bd83987", "access_token");
+
+var_dump($result);
