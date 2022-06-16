@@ -1,7 +1,8 @@
 package com.mycompany.app;
 
-import com.mycompany.app.api.ServerRequestHelper;
+import com.mycompany.app.api.ApiRequestHelper;
 // import com.mycompany.app.api.ServerRequestHelperA;
+import com.mycompany.app.api.OauthApiHelper;
 
 /**
  * Hello world!
@@ -10,7 +11,7 @@ import com.mycompany.app.api.ServerRequestHelper;
 public class App {
 
     public static void main(String[] args) {
-        ServerRequestHelper.test();
+        OauthApiHelper.test();
         // RedisHelper.test();
         // System.out.println("Hello World!");
         // String urlString = "https://yuanzhibang.com/a/b/?x=1&b=2#2"; //

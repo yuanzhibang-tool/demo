@@ -9,7 +9,7 @@ public class OauthApiHelper {
     @SuppressWarnings("unchecked")
     public static Object checkCode(String appId, String code, String type) throws Exception {
         // 先获取token
-        String api = OauthApiHelper.getApiByPath("/UserResource/getUserBaseInfo");
+        String api = OauthApiHelper.getApiByPath("/OAuth2/checkCode");
         Map<String, String> postData = new HashMap<String, String>();
         postData.put("code", code);
         postData.put("app_id", appId);
@@ -19,7 +19,7 @@ public class OauthApiHelper {
             Map<String, String> responseData = (Map<String, String>) OauthApiHelper.apiRequest(api, postData);
             return responseData;
         } catch (OpenAuthErrorException e) {
-            if (e.code == "4102") {
+            if (e.code.equals("4102")) {
                 // !code无效
                 return false;
             } else {
@@ -35,8 +35,8 @@ public class OauthApiHelper {
         Map<String, String> postData = new HashMap<String, String>();
         postData.put("app_id", appId);
         postData.put("access_token", OauthApiHelper.getServerAccessToken(appId));
-        Map<String, Integer> responseData = (Map<String, Integer>) OauthApiHelper.apiRequest(api, postData);
-        Integer count = responseData.get("user_count");
+        Map<String, Double> responseData = (Map<String, Double>) OauthApiHelper.apiRequest(api, postData);
+        int count = responseData.get("user_count").intValue();
         return count;
     }
 
@@ -47,6 +47,9 @@ public class OauthApiHelper {
         Map<String, String> postData = new HashMap<String, String>();
         postData.put("app_id", appId);
         postData.put("access_token", OauthApiHelper.getServerAccessToken(appId));
+        postData.put("load_more_id", "0");
+        postData.put("load_more_count", "100");
+
         ArrayList<Object> responseData = (ArrayList<Object>) OauthApiHelper.apiRequest(api, postData);
         return responseData;
     }
@@ -89,7 +92,7 @@ public class OauthApiHelper {
             Map<String, String> responseData = (Map<String, String>) OauthApiHelper.apiRequest(api, postData);
             return responseData;
         } catch (OpenAuthErrorException e) {
-            if (e.code == "4103") {
+            if (e.code.equals("4103")) {
                 // !没有权限获取，提示用户授权
                 return false;
             } else {
@@ -104,7 +107,7 @@ public class OauthApiHelper {
     }
 
     public static String getServerAccessToken(String appId) {
-        return "d11141568b557a405715d35db3f1cc40e076a1957e637889c7c071beefdc0137";
+        return "4ca1cc7e4439e743fe26e6b6fe8428d8905b272d226d0a7830957b945c184b21";
     }
 
     @SuppressWarnings("unchecked")
@@ -124,4 +127,22 @@ public class OauthApiHelper {
         }
     }
 
+    public static void test() {
+        String appId = "101170";
+        String openId = "b3dFUWFoMW0vUFgwSGxzWlNOV3JLc2pFRENnSlp6Z2NBMFpsZ3NvQXVMVTR2RnJsUkRtQU5MS1Z3V2hSYzdtQ3hnQkZzelhjT0lXbTBGWmVOdHBRYTAwNys0NisramlxU21PZ3lrb1o5Q3FORC96bStTNW5ZbEtiRjRLeUQ5SVFsN1gyUHVld1lJaDkvWGJqZ0trNGx3eWZaUWhORDc1UjBWSGFDWVpFNlhnPQ";
+        try {
+            // Object result = OauthApiHelper.checkCode(appId,
+            // "4ca1cc7e4439e743fe26e6b6fe8428d8905b272d226d0a7830957b945c184b21",
+            // "access_token");
+            // Object result = OauthApiHelper.getAppUserCount(appId);
+            // Object result = OauthApiHelper.getAppUserList(appId);
+            // Object result = OauthApiHelper.getUserAppAccess(appId, openId);
+            // Object result = OauthApiHelper.getUserIsAppAdded(appId, openId);
+            Object result = OauthApiHelper.getUserBaseInfo(appId, openId);
+            result.getClass();
+        } catch (Exception e) {
+            e.getCause();
+        }
+
+    }
 }

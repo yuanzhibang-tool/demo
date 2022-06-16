@@ -1,6 +1,6 @@
 import { ApiRequestHelper } from './api-request-helper';
 
-class OpenAuthError extends Error {
+export class OpenAuthError extends Error {
     code: string;
     message: string;
     constructor(code: string, message: string) {
@@ -10,7 +10,7 @@ class OpenAuthError extends Error {
     }
 }
 
-class OauthApiHelper {
+export class OauthApiHelper {
 
     static checkCode(appId: string, code: string, type: string) {
         const api = OauthApiHelper.getApiByPath("/OAuth2/checkCode");
@@ -134,7 +134,7 @@ class OauthApiHelper {
     }
 
     static getServerAccessToken(appId: string) {
-        return "d11141568b557a405715d35db3f1cc40e076a1957e637889c7c071beefdc0137";
+        return "88d44ec64698d60bf1841b4e8bde4754de87a239ada9284405f403809bd83987";
     }
 
     static apiRequest(url: string, postData: object) {
