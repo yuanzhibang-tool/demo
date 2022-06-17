@@ -27,21 +27,16 @@ class JsSignHelper
         return $url;
     }
 
-    public static function getJsSignInfo($appId, $url)
+    public static function getJsSignInfo($appId, $url, $jsTicket)
     {
-        $jsTicket = "";
         // 取出url中的path之前的部分,参数和锚点不参与计算
         $url = JsSignHelper::getPureUrl($url);
         // 获取当前时间戳
         $timestamp = time();
         // 生成nonce
         $noncestr = JsSignHelper::getGuid();
-        // $jsTicket = "a4dcdk";
-        // $timestamp = 1654850924;
-        // $noncestr = '1234';
         // 组合签名字符串
-        $string = "js_ticket=" . $jsTicket . "&nonce_str=" . $noncestr . "&timestamp=" . $timestamp . "&url=" . $url;
-        $sign = sha1($string);
+        $sign = JsSignHelper::getSign($jsTicket, $noncestr, $timestamp, $url);
 
         $returnData = array();
         $returnData['app_id'] = $appId;
@@ -50,7 +45,11 @@ class JsSignHelper
         $returnData['signature'] = $sign;
         return $returnData;
     }
-}
 
-// 调试
-JsSignHelper::getJsSignInfo('100029', 'https://yuanzhibang.com/a/b/');
+    public static function getSign($jsTicket, $noncestr, $timestamp, $url)
+    {
+        $string = "js_ticket=" . $jsTicket . "&nonce_str=" . $noncestr . "&timestamp=" . $timestamp . "&url=" . $url;
+        $sign = sha1($string);
+        return $sign;
+    }
+}

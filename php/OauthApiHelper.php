@@ -6,7 +6,7 @@ require_once dirname(dirname(__FILE__)) . '/php/OpenAuthErrorException.php';
 class OauthApiHelper
 {
 
-    public static function checkCode($appId, $code, $type)
+    public static function checkCode($appId, $code, $type, $proxy = null)
     {
         // 先获取token
         $api = OauthApiHelper::getApiByPath("/OAuth2/checkCode");
@@ -16,7 +16,7 @@ class OauthApiHelper
             'type' => $type
         ];
         try {
-            $responseData = OauthApiHelper::apiRequest($api, $postData);
+            $responseData = OauthApiHelper::apiRequest($api, $postData, $proxy);
             return $responseData;
         } catch (DHOpenAuthErrorException $e) {
             $statusCode = $e->getCode();
@@ -30,71 +30,71 @@ class OauthApiHelper
     }
 
 
-    public static function getAppUserCount($appId)
+    public static function getAppUserCount($appId, $accessToken, $proxy = null)
     {
         // 先获取token
         $api = OauthApiHelper::getApiByPath("/CommonResource/getUserCount");
         $postData = [
             'app_id' => $appId,
-            'access_token' => OauthApiHelper::getServerAccessToken($appId)
+            'access_token' => $accessToken,
         ];
-        $responseData = OauthApiHelper::apiRequest($api, $postData);
+        $responseData = OauthApiHelper::apiRequest($api, $postData, $proxy);
         $count = $responseData['user_count'];
         return $count;
     }
 
-    public static function getAppUserList($appId)
+    public static function getAppUserList($appId, $accessToken,  $proxy = null)
     {
         // 先获取token
         $api = OauthApiHelper::getApiByPath("/CommonResource/getUserList");
         $postData = [
             'app_id' => $appId,
-            'access_token' => OauthApiHelper::getServerAccessToken($appId),
+            'access_token' => $accessToken,
             'load_more_id' => 0,
             'load_more_count' => 100
         ];
-        $responseData = OauthApiHelper::apiRequest($api, $postData);
+        $responseData = OauthApiHelper::apiRequest($api, $postData, $proxy);
         return $responseData;
     }
 
-    public static function getUserAppAccess($appId, $openId)
+    public static function getUserAppAccess($appId, $openId, $accessToken, $proxy = null)
     {
         // 先获取token
         $api = OauthApiHelper::getApiByPath("/UserResource/getAppAccess");
         $postData = [
             'open_id' => $openId,
             'app_id' => $appId,
-            'access_token' => OauthApiHelper::getServerAccessToken($appId)
+            'access_token' => $accessToken
         ];
-        $responseData = OauthApiHelper::apiRequest($api, $postData);
+        $responseData = OauthApiHelper::apiRequest($api, $postData, $proxy);
         return $responseData;
     }
 
-    public static function getUserIsAppAdded($appId, $openId)
+    public static function getUserIsAppAdded($appId, $openId, $accessToken, $proxy = null)
     {
         // 先获取token
         $api = OauthApiHelper::getApiByPath("/UserResource/getAppIsAdded");
         $postData = [
             'open_id' => $openId,
             'app_id' => $appId,
-            'access_token' => OauthApiHelper::getServerAccessToken($appId)
+            'access_token' => $accessToken
         ];
-        $responseData = OauthApiHelper::apiRequest($api, $postData);
+        $responseData = OauthApiHelper::apiRequest($api, $postData, $proxy);
         return $responseData['is_added'];
     }
 
 
-    public static function getUserBaseInfo($appId, $openId)
+    public static function getUserBaseInfo($appId, $openId, $accessToken, $proxy = null)
     {
         // 先获取token
         $api = OauthApiHelper::getApiByPath("/UserResource/getUserBaseInfo");
         $postData = [
             'open_id' => $openId,
             'app_id' => $appId,
-            'access_token' => OauthApiHelper::getServerAccessToken($appId)
+            'access_token' => $accessToken
         ];
         try {
-            $responseData = OauthApiHelper::apiRequest($api, $postData);
+            $responseData = OauthApiHelper::apiRequest($api, $postData, $proxy);
             return $responseData;
         } catch (DHOpenAuthErrorException $e) {
             $statusCode = $e->getCode();
@@ -113,14 +113,9 @@ class OauthApiHelper
         return $api;
     }
 
-    public static function getServerAccessToken($appId)
+    public static function apiRequest($url, $postData, $proxy = null)
     {
-        return "88d44ec64698d60bf1841b4e8bde4754de87a239ada9284405f403809bd83987";
-    }
-
-    public static function apiRequest($url, $postData)
-    {
-        $response = ApiRequestHelper::post($url, $postData, []);
+        $response = ApiRequestHelper::post($url, $postData, [], $proxy);
         $responseInfo = json_decode($response, true);
         if ($responseInfo == null) {
             throw new DHOpenAuthErrorException('网络错误', "0000", $responseInfo);
@@ -136,16 +131,3 @@ class OauthApiHelper
         }
     }
 }
-
-$appId = "101170";
-// $userCount = OauthApiHelper::getAppUserCount($appId);
-// print($userCount);
-$openId = "b3dFUWFoMW0vUFgwSGxzWlNOV3JLc2pFRENnSlp6Z2NBMFpsZ3NvQXVMVTR2RnJsUkRtQU5MS1Z3V2hSYzdtQ3hnQkZzelhjT0lXbTBGWmVOdHBRYTAwNys0NisramlxU21PZ3lrb1o5Q3FORC96bStTNW5ZbEtiRjRLeUQ5SVFsN1gyUHVld1lJaDkvWGJqZ0trNGx3eWZaUWhORDc1UjBWSGFDWVpFNlhnPQ";
-// $userBaseInfo = OauthApiHelper::getUserBaseInfo($appId, $openId);
-// $isAdded = OauthApiHelper::getUserIsAppAdded($appId, $openId);
-
-// $accesss = OauthApiHelper::getUserAppAccess($appId, $openId);
-// $result = OauthApiHelper::getAppUserList($appId);
-$result = OauthApiHelper::checkCode($appId, "88d44ec64698d60bf1841b4e8bde4754de87a239ada9284405f403809bd83987", "access_token");
-
-var_dump($result);
