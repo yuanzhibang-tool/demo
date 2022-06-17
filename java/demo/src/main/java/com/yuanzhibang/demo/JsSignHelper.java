@@ -1,4 +1,4 @@
-package com.mycompany.app;
+package com.yuanzhibang.demo;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

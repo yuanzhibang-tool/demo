@@ -1,8 +1,8 @@
-package com.mycompany.app;
+package com.yuanzhibang.demo;
 
-import com.mycompany.app.api.ApiRequestHelper;
-// import com.mycompany.app.api.ServerRequestHelperA;
-import com.mycompany.app.api.OauthApiHelper;
+import com.yuanzhibang.demo.api.ApiRequestHelper;
+// import com.yuanzhibang.demo.api.ServerRequestHelperA;
+import com.yuanzhibang.demo.api.OauthApiHelper;
 
 /**
  * Hello world!

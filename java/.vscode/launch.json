@@ -8,8 +8,8 @@
       "type": "java",
       "name": "Launch App",
       "request": "launch",
-      "mainClass": "com.mycompany.app.App",
-      "projectName": "my-app"
+      "mainClass": "com.yuanzhibang.demo.App",
+      "projectName": "demo"
     },
     {
       "type": "java",

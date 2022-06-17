@@ -1,4 +1,4 @@
-package com.mycompany.app.api;
+package com.yuanzhibang.demo.api;
 
 public class RequestProxy {
     public String host;
