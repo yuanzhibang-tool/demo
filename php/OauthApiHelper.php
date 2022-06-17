@@ -6,6 +6,7 @@ class OauthApiHelper
 {
 
     // !依赖php-curl拓展
+    // !$proxy 格式为 ['ADDRESS' => 'proxy_host:proxy_port','AUTH' => 'proxy_user:proxy_password']
     public static function checkCode($appId, $code, $type, $proxy = null)
     {
         // 先获取token
