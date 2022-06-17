@@ -1,14 +1,13 @@
-from http import server
-from api_request_helper import ApiRequestHelper, OauthApiError, OauthNetworkError
+from api_request_helper import ApiRequestHelper, OauthApiError
 
 
 class OauthApiHelper:
     @staticmethod
-    def check_code(app_id, code, type):
+    def check_code(app_id, code, type, proxies=None):
         api = OauthApiHelper.get_api_by_path("/OAuth2/checkCode")
         try:
             response_data = ApiRequestHelper.post(
-                api, {"app_id": app_id, "code": code, "type": type})
+                api, {"app_id": app_id, "code": code, "type": type}, proxies)
             return response_data
         except OauthApiError as e:
             status_code = e.code
@@ -18,50 +17,45 @@ class OauthApiHelper:
                 raise e
 
     @staticmethod
-    def get_app_user_count(app_id):
+    def get_app_user_count(app_id, access_token, proxies=None):
         api = OauthApiHelper.get_api_by_path("/CommonResource/getUserCount")
-        server_access_token = OauthApiHelper.get_server_access_token(app_id)
-        params = {"app_id": app_id, "access_token": server_access_token}
-        response_data = ApiRequestHelper.post(api, params)
+        params = {"app_id": app_id, "access_token": access_token}
+        response_data = ApiRequestHelper.post(api, params, proxies)
         count = response_data["user_count"]
         return count
 
     @staticmethod
-    def get_app_user_list(app_id):
+    def get_app_user_list(app_id, access_token, proxies=None):
         api = OauthApiHelper.get_api_by_path("/CommonResource/getUserList")
-        server_access_token = OauthApiHelper.get_server_access_token(app_id)
-        params = {"app_id": app_id, "access_token": server_access_token,
+        params = {"app_id": app_id, "access_token": access_token,
                   "load_more_id": 0, "load_more_count": 100}
-        response_data = ApiRequestHelper.post(api, params)
+        response_data = ApiRequestHelper.post(api, params, proxies)
         return response_data
 
     @staticmethod
-    def get_user_app_access(app_id, open_id):
+    def get_user_app_access(app_id, open_id, access_token, proxies=None):
         api = OauthApiHelper.get_api_by_path("/UserResource/getAppAccess")
-        server_access_token = OauthApiHelper.get_server_access_token(app_id)
         params = {"app_id": app_id, "open_id": open_id,
-                  "access_token": server_access_token}
-        response_data = ApiRequestHelper.post(api, params)
+                  "access_token": access_token}
+        response_data = ApiRequestHelper.post(api, params, proxies)
         return response_data
 
     @staticmethod
-    def get_user_is_app_added(app_id, open_id):
+    def get_user_is_app_added(app_id, open_id, access_token, proxies=None):
         api = OauthApiHelper.get_api_by_path("/UserResource/getAppIsAdded")
-        server_access_token = OauthApiHelper.get_server_access_token(app_id)
         params = {"app_id": app_id, "open_id": open_id,
-                  "access_token": server_access_token}
-        response_data = ApiRequestHelper.post(api, params)
+                  "access_token": access_token}
+        response_data = ApiRequestHelper.post(api, params, proxies)
         is_added = response_data['is_added']
         return is_added
 
     @staticmethod
-    def get_user_base_info(app_id, open_id):
+    def get_user_base_info(app_id, open_id, access_token, proxies=None):
         api = OauthApiHelper.get_api_by_path("/UserResource/getUserBaseInfo")
-        server_access_token = OauthApiHelper.get_server_access_token(app_id)
         params = {"app_id": app_id, "open_id": open_id,
-                  "access_token": server_access_token}
+                  "access_token": access_token}
         try:
-            response_data = ApiRequestHelper.post(api, params)
+            response_data = ApiRequestHelper.post(api, params, proxies)
             return response_data
         except OauthApiError as e:
             status_code = e.code
@@ -72,10 +66,6 @@ class OauthApiHelper:
                 raise e
 
     @staticmethod
-    def get_server_access_token(app_id):
-        return "7f88bf6c2c9d38c80719b4926f49a97a2cc63619ebddf7a4ec29c0e086efa1fe"
-
-    @staticmethod
     def get_api_by_path(path: str):
         api = "https://oauth.yuanzhibang.com" + path
         return api
@@ -83,12 +73,12 @@ class OauthApiHelper:
 
 # OauthApiHelper.check_code("101170","d6e8d4288c3ed26d710d3a53a6e86572e7677e93618d69d495a6f38869280fb97","js_ticket")
 # OauthApiHelper.get_app_user_list("101170")
-open_id = 'b3dFUWFoMW0vUFgwSGxzWlNOV3JLc2pFRENnSlp6Z2NBMFpsZ3NvQXVMVTR2RnJsUkRtQU5MS1Z3V2hSYzdtQ3hnQkZzelhjT0lXbTBGWmVOdHBRYTAwNys0NisramlxU21PZ3lrb1o5Q3FORC96bStTNW5ZbEtiRjRLeUQ5SVFsN1gyUHVld1lJaDkvWGJqZ0trNGx3eWZaUWhORDc1UjBWSGFDWVpFNlhnPQ'
+# open_id = 'b3dFUWFoMW0vUFgwSGxzWlNOV3JLc2pFRENnSlp6Z2NBMFpsZ3NvQXVMVTR2RnJsUkRtQU5MS1Z3V2hSYzdtQ3hnQkZzelhjT0lXbTBGWmVOdHBRYTAwNys0NisramlxU21PZ3lrb1o5Q3FORC96bStTNW5ZbEtiRjRLeUQ5SVFsN1gyUHVld1lJaDkvWGJqZ0trNGx3eWZaUWhORDc1UjBWSGFDWVpFNlhnPQ'
 # open_id = 'VS9XVWxEMkNocHRyaTQ4TDRwblpMNU1tSVdjbXUwQytkd2ZMUlBqRXdnTTVqYWluVXExdXhQbzJBUDZjdnNwTVpoRTY5SXhxd0VCZU9Jc3ZvekkrWE1McE9wNzdkVTUvWjg3c2hlQzNqQUVBM2FOOHF0Y29hanI2SElmczkxS3g0eTkvSk9OQysrcGFyV21VTzJhQm9ZSGliS2ppdnlwR0JMZUIrKzJraFIwPQ'
 # user_list = OauthApiHelper.get_app_user_list("101170")
 # print(user_list)
 # count = OauthApiHelper.get_app_user_count("101170")
 # print(count)
 
-user_base_info = OauthApiHelper.get_user_base_info("101170", open_id)
-print(user_base_info)
+# user_base_info = OauthApiHelper.get_user_base_info("101170", open_id)
+# print(user_base_info)
