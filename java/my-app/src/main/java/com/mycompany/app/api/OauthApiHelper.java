@@ -7,7 +7,7 @@ import java.util.Map;
 public class OauthApiHelper {
 
     @SuppressWarnings("unchecked")
-    public static Object checkCode(String appId, String code, String type) throws Exception {
+    public static Object checkCode(String appId, String code, String type, RequestProxy proxy) throws Exception {
         // 先获取token
         String api = OauthApiHelper.getApiByPath("/OAuth2/checkCode");
         Map<String, String> postData = new HashMap<String, String>();
@@ -16,7 +16,7 @@ public class OauthApiHelper {
         postData.put("type", type);
 
         try {
-            Map<String, String> responseData = (Map<String, String>) OauthApiHelper.apiRequest(api, postData);
+            Map<String, String> responseData = (Map<String, String>) OauthApiHelper.apiRequest(api, postData, proxy);
             return responseData;
         } catch (OpenAuthErrorException e) {
             if (e.code.equals("4102")) {
@@ -29,67 +29,70 @@ public class OauthApiHelper {
     }
 
     @SuppressWarnings("unchecked")
-    public static Object getAppUserCount(String appId) throws Exception {
+    public static Object getAppUserCount(String appId, String accessToken, RequestProxy proxy) throws Exception {
         // 先获取token
         String api = OauthApiHelper.getApiByPath("/CommonResource/getUserCount");
         Map<String, String> postData = new HashMap<String, String>();
         postData.put("app_id", appId);
-        postData.put("access_token", OauthApiHelper.getServerAccessToken(appId));
-        Map<String, Double> responseData = (Map<String, Double>) OauthApiHelper.apiRequest(api, postData);
+        postData.put("access_token", accessToken);
+        Map<String, Double> responseData = (Map<String, Double>) OauthApiHelper.apiRequest(api, postData, proxy);
         int count = responseData.get("user_count").intValue();
         return count;
     }
 
     @SuppressWarnings("unchecked")
-    public static Object getAppUserList(String appId) throws Exception {
+    public static Object getAppUserList(String appId, String accessToken, RequestProxy proxy) throws Exception {
         // 先获取token
         String api = OauthApiHelper.getApiByPath("/CommonResource/getUserList");
         Map<String, String> postData = new HashMap<String, String>();
         postData.put("app_id", appId);
-        postData.put("access_token", OauthApiHelper.getServerAccessToken(appId));
+        postData.put("access_token", accessToken);
         postData.put("load_more_id", "0");
         postData.put("load_more_count", "100");
 
-        ArrayList<Object> responseData = (ArrayList<Object>) OauthApiHelper.apiRequest(api, postData);
+        ArrayList<Object> responseData = (ArrayList<Object>) OauthApiHelper.apiRequest(api, postData, proxy);
         return responseData;
     }
 
     @SuppressWarnings("unchecked")
-    public static Object getUserAppAccess(String appId, String openId) throws Exception {
+    public static Object getUserAppAccess(String appId, String openId, String accessToken, RequestProxy proxy)
+            throws Exception {
         // 先获取token
         String api = OauthApiHelper.getApiByPath("/UserResource/getAppAccess");
         Map<String, String> postData = new HashMap<String, String>();
         postData.put("open_id", openId);
         postData.put("app_id", appId);
-        postData.put("access_token", OauthApiHelper.getServerAccessToken(appId));
-        ArrayList<String> responseData = (ArrayList<String>) OauthApiHelper.apiRequest(api, postData);
+        postData.put("access_token", accessToken);
+        ArrayList<String> responseData = (ArrayList<String>) OauthApiHelper.apiRequest(api, postData, proxy);
         return responseData;
     }
 
     @SuppressWarnings("unchecked")
-    public static Object getUserIsAppAdded(String appId, String openId) throws Exception {
+    public static Object getUserIsAppAdded(String appId, String openId, String accessToken, RequestProxy proxy)
+            throws Exception {
         // 先获取token
         String api = OauthApiHelper.getApiByPath("/UserResource/getAppIsAdded");
         Map<String, String> postData = new HashMap<String, String>();
         postData.put("open_id", openId);
         postData.put("app_id", appId);
-        postData.put("access_token", OauthApiHelper.getServerAccessToken(appId));
-        Map<String, Boolean> responseData = (Map<String, Boolean>) OauthApiHelper.apiRequest(api, postData);
+        postData.put("access_token", accessToken);
+        Map<String, Boolean> responseData = (Map<String, Boolean>) OauthApiHelper.apiRequest(api, postData, proxy);
         Boolean isAdded = responseData.get("is_added");
         return isAdded;
     }
 
     @SuppressWarnings("unchecked")
-    public static Object getUserBaseInfo(String appId, String openId) throws Exception {
+    public static Object getUserBaseInfo(String appId, String openId, String accessToken, RequestProxy proxy)
+            throws Exception {
         // 先获取token
         String api = OauthApiHelper.getApiByPath("/UserResource/getUserBaseInfo");
         Map<String, String> postData = new HashMap<String, String>();
         postData.put("open_id", openId);
         postData.put("app_id", appId);
-        postData.put("access_token", OauthApiHelper.getServerAccessToken(appId));
+        postData.put("access_token", accessToken);
 
         try {
-            Map<String, String> responseData = (Map<String, String>) OauthApiHelper.apiRequest(api, postData);
+            Map<String, String> responseData = (Map<String, String>) OauthApiHelper.apiRequest(api, postData, proxy);
             return responseData;
         } catch (OpenAuthErrorException e) {
             if (e.code.equals("4103")) {
@@ -106,13 +109,9 @@ public class OauthApiHelper {
         return api;
     }
 
-    public static String getServerAccessToken(String appId) {
-        return "4ca1cc7e4439e743fe26e6b6fe8428d8905b272d226d0a7830957b945c184b21";
-    }
-
     @SuppressWarnings("unchecked")
-    public static Object apiRequest(String url, Map<String, String> postData) throws Exception {
-        Map<String, Object> response = (Map<String, Object>) ApiRequestHelper.post(url, postData, null, null);
+    public static Object apiRequest(String url, Map<String, String> postData, RequestProxy proxy) throws Exception {
+        Map<String, Object> response = (Map<String, Object>) ApiRequestHelper.post(url, postData, null, proxy);
         if (response == null) {
             throw new OpenAuthErrorException("0000", "网络错误");
         } else {
@@ -138,7 +137,7 @@ public class OauthApiHelper {
             // Object result = OauthApiHelper.getAppUserList(appId);
             // Object result = OauthApiHelper.getUserAppAccess(appId, openId);
             // Object result = OauthApiHelper.getUserIsAppAdded(appId, openId);
-            Object result = OauthApiHelper.getUserBaseInfo(appId, openId);
+            Object result = OauthApiHelper.getUserBaseInfo(appId, openId, null, null);
             result.getClass();
         } catch (Exception e) {
             e.getCause();
