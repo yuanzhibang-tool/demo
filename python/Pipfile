@@ -8,6 +8,7 @@ redis = "*"
 requests = "*"
 
 [dev-packages]
+munch = "*"
 
 [requires]
 python_version = "3.8"

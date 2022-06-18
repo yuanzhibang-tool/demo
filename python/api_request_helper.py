@@ -30,17 +30,20 @@ class ApiRequestHelper:
     def raise_network_error(response):
         status_code = response.status_code
         if status_code != 200:
-            raise OauthNetworkError(status_code, '', response)
+            raise OauthNetworkError(status_code, 'network error', response)
 
-    @staticmethod
+    @ staticmethod
     def raise_api_error(response):
-        response_object = response.json()
-        status: str = response_object['status']
-        message = response_object['message']
+        try:
+            response_object = response.json()
+            status: str = response_object['status']
+            message = response_object['message']
+        except Exception as e:
+            raise OauthNetworkError("0000", 'network error', response)
         if status.startswith('2') is False:
             raise OauthApiError(status, message, response)
 
-    @staticmethod
+    @ staticmethod
     def test():
         ApiRequestHelper.post('https://api-service.yuanzhibang.com/api/v1/Ip/getClientIp', {},
                               {
