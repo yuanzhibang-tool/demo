@@ -46,8 +46,3 @@ class JsSignHelper:
         hash_object = hashlib.sha1(sign_string.encode("utf-8"))
         sign = hash_object.hexdigest()
         return sign
-
-    @staticmethod
-    def test():
-        JsSignHelper.get_pure_url("https://yuanzhibang.com:80/a/b/")
-        JsSignHelper.get_js_sign_info("100027", "https://yuanzhibang.com/a/b")
