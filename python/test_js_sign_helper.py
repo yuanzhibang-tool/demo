@@ -17,6 +17,13 @@ class TestJsSignHelper(unittest.TestCase):
         self.assertIsInstance(guid_2, str)
 
     def test_get_pure_url(self):
+        url = "https://yuanzhibang.com/a/b/?x=1&v=x#12"
+        pure_url = JsSignHelper.get_pure_url(url)
+        self.assertEqual(pure_url, "https://yuanzhibang.com/a/b")
+        url = "https://yuanzhibang.com:80/a/b/?x=1&v=x#12"
+        pure_url = JsSignHelper.get_pure_url(url)
+        self.assertEqual(pure_url, "https://yuanzhibang.com:80/a/b")
+        url = "https://yuanzhibang.com/a/b/"
         pure_url = JsSignHelper.get_pure_url(url)
         self.assertEqual(pure_url, "https://yuanzhibang.com/a/b")
 
