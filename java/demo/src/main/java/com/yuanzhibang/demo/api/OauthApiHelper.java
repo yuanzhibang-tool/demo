@@ -111,7 +111,7 @@ public class OauthApiHelper {
 
     @SuppressWarnings("unchecked")
     public static Object apiRequest(String url, Map<String, String> postData, RequestProxy proxy) throws Exception {
-        Map<String, Object> response = (Map<String, Object>) ApiRequestHelper.post(url, postData, null, proxy);
+        Map<String, Object> response = (Map<String, Object>) ApiRequestHelper.post(url, postData, null, true, proxy);
         if (response == null) {
             throw new OpenAuthErrorException("0000", "网络错误");
         } else {

@@ -43,10 +43,4 @@ public class RedisHelper {
         redisClient.shutdown();
         return value;
     }
-
-    public static void test() {
-        RedisHelper helper = new RedisHelper("redis://p8WOmXgzZg@demo-dev-cache-redis:6379");
-        String jsTicket = helper.getJsTicket("100027");
-        String serverAccessToken = helper.getServerAccessToken("100027");
-    }
 }

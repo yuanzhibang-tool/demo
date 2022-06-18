@@ -1,6 +1,6 @@
 package com.yuanzhibang.demo.api;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
@@ -12,7 +12,10 @@ public class OpenAuthErrorExceptionTest {
      * Rigorous Test :-)
      */
     @Test
-    public void shouldAnswerWithTrue() {
-        assertTrue(true);
+    public void test_init() {
+        OpenAuthErrorException error = new OpenAuthErrorException("code", "error message");
+        assertEquals(error.code, "code");
+        assertEquals(error.message, "error message");
+
     }
 }

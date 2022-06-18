@@ -8,5 +8,4 @@ public class OpenAuthErrorException extends Exception {
         this.code = code;
         this.message = message;
     }
-
 }

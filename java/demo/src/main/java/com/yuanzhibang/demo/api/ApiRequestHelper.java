@@ -1,6 +1,7 @@
 package com.yuanzhibang.demo.api;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +27,8 @@ import com.google.gson.Gson;
 public class ApiRequestHelper {
 
     @SuppressWarnings("unchecked")
-    public static Object post(String url, Map<String, String> params, Map<String, String> headers, RequestProxy proxy) {
+    public static Object post(String url, Map<String, String> params, Map<String, String> headers,
+            boolean parseJson, RequestProxy proxy) {
         try {
             CloseableHttpClient httpClient;
             HttpPost request = new HttpPost(url);
@@ -55,7 +57,6 @@ public class ApiRequestHelper {
             if (params != null) {
                 List<NameValuePair> postParams = new ArrayList<>();
                 for (Map.Entry<String, String> entry : params.entrySet()) {
-                    // request.SE(entry.getKey(), entry.getValue());
                     postParams.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
                 }
                 request.setEntity(new UrlEncodedFormEntity(postParams));
@@ -68,22 +69,31 @@ public class ApiRequestHelper {
             try {
                 HttpResponse response = httpClient.execute(request);
                 String responseString = EntityUtils.toString(response.getEntity());
-                Gson gson = new Gson();
-                Map<String, String> info = gson.fromJson(responseString, Map.class);
-                return info;
+                try {
+                    if (parseJson) {
+                        Gson gson = new Gson();
+                        Map<String, String> info = gson.fromJson(responseString, Map.class);
+                        return info;
+                    } else {
+                        return responseString;
+                    }
+                } catch (Exception e) {
+                    return null;
+                }
             } catch (IOException e) {
                 return null;
             } finally {
                 request.releaseConnection();
             }
-        } catch (Exception e) {
+        } catch (UnsupportedEncodingException e) {
             return null;
         }
 
     }
 
-    public static void test() {
-        RequestProxy proxy = new RequestProxy("demo-proxy", 7789, "123", "12345678");
-        ApiRequestHelper.post("https://api-service.yuanzhibang.com/api/v1/Ip/getClientIp", null, null, proxy);
-    }
+    // public static void test() {
+    // RequestProxy proxy = new RequestProxy("demo-proxy", 7789, "123", "12345678");
+    // ApiRequestHelper.post("https://api-service.yuanzhibang.com/api/v1/Ip/getClientIp",
+    // null, null, proxy);
+    // }
 }
