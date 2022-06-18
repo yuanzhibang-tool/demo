@@ -27,14 +27,24 @@ public class JsSignHelper {
         }
     }
 
-    public static HashMap<String, String> getJsSignInfo(String appId, String urlString) {
-        // !此值通过从redis中读取获取js_ticket
-        String jsTicket = "a4dcdk";
+    public static HashMap<String, String> getJsSignInfo(String appId, String urlString, String jsTicket) {
         String noncestr = UUID.randomUUID().toString(); // 此为随机生成的字符串,最长为128个字符串;
         long timestamp = System.currentTimeMillis() / 1000L;
-        // timestamp = 1654850924;
-        // noncestr = "1234";
+        try {
+            String sha1 = JsSignHelper.getSign(jsTicket, noncestr, timestamp, urlString);
+            HashMap<String, String> returnMap = new HashMap<String, String>();
+            returnMap.put("app_id", appId);
+            returnMap.put("timestamp", String.format("%d", timestamp));
+            returnMap.put("nonce_str", noncestr);
+            returnMap.put("signature", sha1);
+            returnMap.put("url", urlString);
+            return returnMap;
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
+    public static String getSign(String jsTicket, String noncestr, long timestamp, String urlString) {
         try {
             String pureUrlString = JsSignHelper.getPureUrl(urlString);
             if (pureUrlString.endsWith("/")) {
@@ -48,12 +58,7 @@ public class JsSignHelper {
             digest.reset();
             digest.update(signString.getBytes("utf8"));
             sha1 = String.format("%040x", new BigInteger(1, digest.digest()));
-            HashMap<String, String> returnMap = new HashMap();
-            returnMap.put("app_id", appId);
-            returnMap.put("timestamp", String.format("%d", timestamp));
-            returnMap.put("nonce_str", noncestr);
-            returnMap.put("signature", sha1);
-            return returnMap;
+            return sha1;
         } catch (Exception e) {
             return null;
         }
