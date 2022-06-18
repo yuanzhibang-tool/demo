@@ -29,7 +29,7 @@ public class OauthApiHelper {
     }
 
     @SuppressWarnings("unchecked")
-    public static Object getAppUserCount(String appId, String accessToken, RequestProxy proxy) throws Exception {
+    public static int getAppUserCount(String appId, String accessToken, RequestProxy proxy) throws Exception {
         // 先获取token
         String api = OauthApiHelper.getApiByPath("/CommonResource/getUserCount");
         Map<String, String> postData = new HashMap<String, String>();
@@ -41,7 +41,8 @@ public class OauthApiHelper {
     }
 
     @SuppressWarnings("unchecked")
-    public static Object getAppUserList(String appId, String accessToken, RequestProxy proxy) throws Exception {
+    public static ArrayList<Map<String, String>> getAppUserList(String appId, String accessToken, RequestProxy proxy)
+            throws Exception {
         // 先获取token
         String api = OauthApiHelper.getApiByPath("/CommonResource/getUserList");
         Map<String, String> postData = new HashMap<String, String>();
@@ -50,12 +51,15 @@ public class OauthApiHelper {
         postData.put("load_more_id", "0");
         postData.put("load_more_count", "100");
 
-        ArrayList<Object> responseData = (ArrayList<Object>) OauthApiHelper.apiRequest(api, postData, proxy);
+        ArrayList<Map<String, String>> responseData = (ArrayList<Map<String, String>>) OauthApiHelper.apiRequest(api,
+                postData,
+                proxy);
         return responseData;
     }
 
     @SuppressWarnings("unchecked")
-    public static Object getUserAppAccess(String appId, String openId, String accessToken, RequestProxy proxy)
+    public static ArrayList<String> getUserAppAccess(String appId, String openId, String accessToken,
+            RequestProxy proxy)
             throws Exception {
         // 先获取token
         String api = OauthApiHelper.getApiByPath("/UserResource/getAppAccess");
@@ -68,7 +72,7 @@ public class OauthApiHelper {
     }
 
     @SuppressWarnings("unchecked")
-    public static Object getUserIsAppAdded(String appId, String openId, String accessToken, RequestProxy proxy)
+    public static Boolean getUserIsAppAdded(String appId, String openId, String accessToken, RequestProxy proxy)
             throws Exception {
         // 先获取token
         String api = OauthApiHelper.getApiByPath("/UserResource/getAppIsAdded");
@@ -82,7 +86,8 @@ public class OauthApiHelper {
     }
 
     @SuppressWarnings("unchecked")
-    public static Object getUserBaseInfo(String appId, String openId, String accessToken, RequestProxy proxy)
+    public static Object getUserBaseInfo(String appId, String openId, String accessToken,
+            RequestProxy proxy)
             throws Exception {
         // 先获取token
         String api = OauthApiHelper.getApiByPath("/UserResource/getUserBaseInfo");
