@@ -7,6 +7,19 @@ import java.util.Map;
 public class OauthApiHelper {
 
     @SuppressWarnings("unchecked")
+    public static Object token(String appId, String code, String secret, RequestProxy proxy) throws Exception {
+        // 先获取token
+        String api = OauthApiHelper.getApiByPath("/OAuth2/token");
+        Map<String, String> postData = new HashMap<String, String>();
+        postData.put("code", code);
+        postData.put("app_id", appId);
+        postData.put("secret", secret);
+        postData.put("grant_type", "authorization_code");
+        Map<String, String> responseData = (Map<String, String>) OauthApiHelper.apiRequest(api, postData, proxy);
+        return responseData;
+    }
+
+    @SuppressWarnings("unchecked")
     public static Object checkCode(String appId, String code, String type, RequestProxy proxy) throws Exception {
         // 先获取token
         String api = OauthApiHelper.getApiByPath("/OAuth2/checkCode");
