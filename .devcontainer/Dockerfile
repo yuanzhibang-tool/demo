@@ -10,7 +10,7 @@ RUN apt upgrade -y
 RUN echo 'start build'
 RUN LC_ALL=C.UTF-8
 
-RUN apt install -y php7.4 php7.4-dev php7.4-xdebug php7.4-redis gcc g++ git curl openjdk-8-jre-headless python3 python3-pip pipenv maven iputils-ping nano
+RUN apt install -y zip php7.4 php7.4-dev php7.4-xdebug php7.4-redis php7.4-zip php7.4-mbstring gcc g++ git curl openjdk-8-jre-headless python3 python3-pip pipenv maven iputils-ping nano
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt update
 RUN apt install -y nodejs
