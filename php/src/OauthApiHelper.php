@@ -5,6 +5,21 @@ class OauthApiHelper
 
     // !依赖php-curl拓展
     // !$proxy 格式为 ['ADDRESS' => 'proxy_host:proxy_port','AUTH' => 'proxy_user:proxy_password']
+
+    public static function token($appId, $code, $secret, $proxy = null)
+    {
+        // 先获取token
+        $api = OauthApiHelper::getApiByPath("/OAuth2/token");
+        $postData = [
+            'app_id' => $appId,
+            'secret' => $secret,
+            'code' => $code,
+            'grant_type' => 'authorization_code'
+        ];
+        $responseData = OauthApiHelper::apiRequest($api, $postData, $proxy);
+        return $responseData;
+    }
+
     public static function checkCode($appId, $code, $type, $proxy = null)
     {
         // 先获取token
