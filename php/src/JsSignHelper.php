@@ -29,8 +29,6 @@ class JsSignHelper
 
     public static function getJsSignInfo($appId, $url, $jsTicket)
     {
-        // 取出url中的path之前的部分,参数和锚点不参与计算
-        $url = JsSignHelper::getPureUrl($url);
         // 获取当前时间戳
         $timestamp = time();
         // 生成nonce
@@ -48,7 +46,10 @@ class JsSignHelper
 
     public static function getSign($jsTicket, $noncestr, $timestamp, $url)
     {
+        // 取出url中的path之前的部分,参数和锚点不参与计算
+        $url = JsSignHelper::getPureUrl($url);
         $string = "js_ticket=" . $jsTicket . "&nonce_str=" . $noncestr . "&timestamp=" . $timestamp . "&url=" . $url;
+        echo  $string;
         $sign = sha1($string);
         return $sign;
     }
