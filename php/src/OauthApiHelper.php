@@ -17,7 +17,7 @@ class OauthApiHelper
         try {
             $responseData = OauthApiHelper::apiRequest($api, $postData, $proxy);
             return $responseData;
-        } catch (DHOpenAuthErrorException $e) {
+        } catch (OpenAuthErrorException $e) {
             $statusCode = $e->getCode();
             if ($statusCode == "4102") {
                 # !code无效
@@ -95,7 +95,7 @@ class OauthApiHelper
         try {
             $responseData = OauthApiHelper::apiRequest($api, $postData, $proxy);
             return $responseData;
-        } catch (DHOpenAuthErrorException $e) {
+        } catch (OpenAuthErrorException $e) {
             $statusCode = $e->getCode();
             if ($statusCode == "4103") {
                 # !没有权限获取，提示用户授权
@@ -117,7 +117,7 @@ class OauthApiHelper
         $response = OauthApiHelper::post($url, $postData, [], $proxy);
         $responseInfo = json_decode($response, true);
         if ($responseInfo == null) {
-            throw new DHOpenAuthErrorException('网络错误', "0000", $responseInfo);
+            throw new OpenAuthErrorException('网络错误', "0000", $responseInfo);
         } else {
             $status = $responseInfo['status'];
             $message = $responseInfo['message'];
@@ -125,7 +125,7 @@ class OauthApiHelper
             if ("2000" == $status) {
                 return $responseData;
             } else {
-                throw new DHOpenAuthErrorException($message, $status, $responseInfo);
+                throw new OpenAuthErrorException($message, $status, $responseInfo);
             }
         }
     }

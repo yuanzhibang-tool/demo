@@ -1,6 +1,6 @@
 <?php
 
-class DHOpenAuthErrorException extends Exception
+class OpenAuthErrorException extends Exception
 {
 
     public $extra;
