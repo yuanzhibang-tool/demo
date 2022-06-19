@@ -15,7 +15,7 @@ RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt update
 RUN apt install -y nodejs
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-RUN php composer-setup.php --install-dir=/usr/bin/ && rm composer-setup.php 
+RUN php composer-setup.php --install-dir=/usr/bin/  --filename=composer  && rm composer-setup.php 
 
 RUN git config --global http.proxyAuthMethod 'basic'
 RUN git config --global http.sslverify false
