@@ -2,6 +2,15 @@ from api_request_helper import ApiRequestHelper, OauthApiError
 
 
 class OauthApiHelper:
+
+    @staticmethod
+    def get_app_user_count(app_id, code, secret, proxies=None):
+        api = OauthApiHelper.get_api_by_path("/OAuth2/token")
+        params = {"app_id": app_id, "code": code,
+                  "secret": secret, "grant_type": "authorization_code"}
+        response_data = ApiRequestHelper.post(api, params, proxies)
+        return response_data
+
     @staticmethod
     def check_code(app_id, code, type, proxies=None):
         api = OauthApiHelper.get_api_by_path("/OAuth2/checkCode")
