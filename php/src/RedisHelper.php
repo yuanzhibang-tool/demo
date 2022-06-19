@@ -42,18 +42,7 @@ class RedisHelper
         $info = json_decode($infoString, true);
         $result = $info[$codeKey];
         $redis->close();
+
         return $result;
     }
 }
-
-
-$config = [
-    "host" => "demo-dev-cache-redis",
-    "port" => 6379,
-    "auth" => 'p8WOmXgzZg',
-];
-$redisHelper = new RedisHelper($config);
-$jsTicket = $redisHelper->getJsTicket("100027");
-$serverAccessToken = $redisHelper->getServerAccessToken("100027");
-var_dump($jsTicket);
-var_dump($serverAccessToken);

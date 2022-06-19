@@ -1,7 +1,5 @@
 <?php
 
-require_once dirname(dirname(__FILE__)) . '/php/OpenAuthErrorException.php';
-
 class OauthApiHelper
 {
 
