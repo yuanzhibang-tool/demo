@@ -35,12 +35,12 @@ class JsSignHelper
         $noncestr = JsSignHelper::getGuid();
         // 组合签名字符串
         $sign = JsSignHelper::getSign($jsTicket, $noncestr, $timestamp, $url);
-
         $returnData = array();
         $returnData['app_id'] = $appId;
         $returnData['timestamp'] = "$timestamp";
         $returnData['nonce_str'] = $noncestr;
         $returnData['signature'] = $sign;
+        $returnData['url'] = $url;
         return $returnData;
     }
 
@@ -49,7 +49,6 @@ class JsSignHelper
         // 取出url中的path之前的部分,参数和锚点不参与计算
         $url = JsSignHelper::getPureUrl($url);
         $string = "js_ticket=" . $jsTicket . "&nonce_str=" . $noncestr . "&timestamp=" . $timestamp . "&url=" . $url;
-        echo  $string;
         $sign = sha1($string);
         return $sign;
     }
