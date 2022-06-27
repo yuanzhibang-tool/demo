@@ -1,0 +1,25 @@
+version: 2.1
+orbs:
+  docker: circleci/docker@1.4.0
+jobs: # a basic unit of work in a run
+  build-demo-env: # your job name
+    machine:
+      image: ubuntu-2004:current
+    steps: # a series of commands to run
+      - checkout # pull down code from your version control system.
+      - when:
+          condition:
+            equal: [circleci-project-setup, << pipeline.git.branch >>]
+          steps:
+            - run: echo "I am on circleci-project-setup"
+            - docker/check:
+                docker-username: DOCKERHUB_LOGIN # DOCKER_LOGIN is the default value, if it exists, it automatically would be used.
+                docker-password: DOCKERHUB_PASSWORD
+            - run:
+                name: build docker-env
+                command: cd .devcontainer && ./build.sh
+workflows:
+  version: 2
+  build-demo-env:
+    jobs:
+      - build-demo-env

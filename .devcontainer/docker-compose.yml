@@ -1,0 +1,18 @@
+version: '3.2'
+services:
+  demo-dev:
+    image: yuanzhibang/demo-env:default
+    # build: .
+    volumes:
+      - ..:/home/developer/Demo
+    depends_on:
+      - demo-dev-cache-redis
+      - demo-proxy
+  demo-dev-cache-redis:
+    image: redis:latest
+    command: redis-server --port 6379 --requirepass p8WOmXgzZg  --appendonly yes
+  demo-proxy:
+    image: yuanzhibang/proxy:default
+    environment:
+      - PROXY_USER=123
+      - PROXY_PASSWORD=12345678
